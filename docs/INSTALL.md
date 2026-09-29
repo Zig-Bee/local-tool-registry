@@ -114,7 +114,7 @@ python3 plugins/local-tool-registry/scripts/registry.py register --file "/绝对
 
 | 现象 | 处理方式 |
 |---|---|
-| 下载失败 | 检查是否能访问 raw.githubusercontent.com 和 codeload.github.com，或使用完整 ZIP |
+| 下载失败 | 改用 AI 安装方式，让 AI 尝试 Git 克隆；也可以下载完整 ZIP |
 | 找不到 Python | 安装 Python 3.9+，确保 python3 命令可用，再重试 |
 | 找不到 Codex | 安装 Codex CLI，或用 --codex 指定已有程序 |
 | Codex 不识别 plugin | 更新到提供插件与 Hook 功能的版本 |

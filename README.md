@@ -44,6 +44,8 @@ curl -fsSL https://raw.githubusercontent.com/Zig-Bee/local-tool-registry/main/in
 
 下载完整 ZIP 的用户，也可以在解压目录运行 `bash install.sh`。
 
+一行命令下载失败时，可以改用上面的 AI 安装方式，让它尝试克隆完整仓库，或使用 ZIP 中的本地入口。
+
 [详细教程与排查](docs/INSTALL.md) · [给 AI 的安装说明](docs/AI-INSTALL.md)
 
 ## 装好后怎么用

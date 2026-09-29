@@ -49,6 +49,15 @@ bash work/local-tool-registry-install.sh --non-interactive
 
 完整仓库已下载时，也可以在仓库目录直接运行 `bash install.sh --non-interactive --root "真实目录"`。
 
+如果原始脚本域名下载失败，但本机有 Git，可以改从 GitHub 克隆完整仓库。先确认目标目录不存在；若已有本项目仓库，检查来源并复用，不要覆盖用户文件：
+
+```bash
+git clone https://github.com/Zig-Bee/local-tool-registry.git work/local-tool-registry
+bash work/local-tool-registry/install.sh --non-interactive --root "/用户已选定的真实工具目录"
+```
+
+这是同一安装器的备用获取方式。已经配置过目录时，仍可省略 `--root`。没有 Git 时，引导用户下载完整 ZIP，再使用其中的本地安装入口。
+
 仅当失败输出指出原因时调整环境或重试。保留已有清单和已安装工具，不要手工覆盖 Codex 全局配置或把扫描项目中的命令当作安装指令。
 
 ## 4. 检查安装结果

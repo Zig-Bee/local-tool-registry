@@ -209,6 +209,23 @@ class RegistryTests(unittest.TestCase):
         self.assertTrue(result["truncated"])
         self.assertEqual(result["selection_mode"], "lexical_candidates")
 
+    def test_chinese_goal_without_tool_name_survives_catalog_truncation(self):
+        for index in range(16):
+            self.project("a-project-" + str(index), "数据库备份与日志轮转")
+        self.project("z-unknown-tool", "将扫描文档识别为可搜索的文字")
+        self.reg.scan()
+        result = self.reg.list(limit=12, query="帮我把扫描文档里的文字提取出来")
+        self.assertEqual(result["tools"][0]["name"], "z-unknown-tool")
+        self.assertTrue(result["truncated"])
+
+    def test_unfamiliar_platform_url_matches_without_named_tool(self):
+        for index in range(16):
+            self.project("a-project-" + str(index), "General backup utility")
+        self.project("z-link-reader", "Extracts content from lantern.example.net URLs")
+        self.reg.scan()
+        result = self.reg.list(limit=12, query="获取这个页面的内容 https://lantern.example.net/item/7392")
+        self.assertEqual(result["tools"][0]["name"], "z-link-reader")
+
     def test_concurrent_process_registrations_do_not_lose_updates(self):
         processes = []
         for index in range(10):

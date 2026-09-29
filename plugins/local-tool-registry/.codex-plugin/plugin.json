@@ -1,6 +1,6 @@
 {
   "name": "local-tool-registry",
-  "version": "0.1.0+codex.20260929053146",
+  "version": "0.1.0+codex.20260929092349",
   "description": "Discover and reuse local tools across Codex conversations.",
   "author": {
     "name": "Local Tool Registry contributors"
@@ -9,10 +9,11 @@
   "interface": {
     "displayName": "Local Tool Registry",
     "shortDescription": "Find tools already installed on this computer.",
-    "longDescription": "Refresh a shared local tool catalog before tasks, then let Codex select suitable capabilities.",
+    "longDescription": "Find installed capabilities through a read-only tool search; trusted task hooks also provide candidates proactively.",
     "developerName": "Local Tool Registry contributors",
     "category": "Productivity",
     "capabilities": [],
     "defaultPrompt": "Set up discovery for my local tools."
-  }
+  },
+  "mcpServers": "./.mcp.json"
 }

@@ -91,7 +91,9 @@ shutil.copyfile(os.environ["LTR_TEST_ARCHIVE"], target)
         self.assertEqual(state["roots"], [str(self.root.resolve())])
         self.assertEqual(len(state["tools"]), 1)
         calls = [json.loads(line) for line in self.log.read_text().splitlines()]
-        self.assertEqual(calls[-1], ["plugin", "add", "local-tool-registry@local-tool-registry"])
+        self.assertEqual([call for call in calls if call[:1] == ["plugin"]][-1],
+                         ["plugin", "add", "local-tool-registry@local-tool-registry"])
+        self.assertEqual(calls[-1][-2:], ["app-server", "--stdio"])
         self.assertIn("/hooks", result.stdout)
         self.assertFalse((self.base / "nope").exists())
         self.assertFalse((self.base / "curl.jsonl").exists())

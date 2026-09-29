@@ -33,13 +33,19 @@ curl -fsSL https://raw.githubusercontent.com/Zig-Bee/local-tool-registry/main/in
 
 如果已经配置过，会先显示原目录：回车沿用，输入 `a` 追加。已有清单和手动登记的调用入口会保留。
 
+安装器会只读查询宿主的真实 Hook 状态，分别报告待信任、已禁用、未加载或无法确认，不会自动批准。也可以在安装来源目录运行 `python3 scripts/check_activation.py --codex /实际路径/codex --cwd /当前任务目录` 复查；`ready` 仅表示配置可运行，不证明任务已成功采用工具。
+
 ## 在 Codex 中信任 Hook
 
 新开 Codex 会话，输入 `/hooks`。找到 Local Tool Registry，审阅并信任它的 `SessionStart` 和 `UserPromptSubmit`，然后开始新任务。
 
 这是 Codex 要求的信任步骤，安装插件不会自动完成它。若当前界面没有这个入口，使用支持该功能的 Codex CLI；安装器通过应用位置找到 Codex 时，会显示可直接运行的完整命令。[官方 Hook 说明](https://learn.chatgpt.com/docs/hooks)
 
-自动触发仍要求 Codex 进程能找到 `python3`。终端能运行 Python，不代表所有桌面启动环境都拥有相同 PATH。
+完成信任后，用日常的 Codex 界面新开任务，只给输入和目标。需要确认该会话确实收到工具候选，并在适用时调用工具；“插件已安装”或手动运行 Hook 成功还不算自动发现验收通过。
+
+新版还提供 `find_local_tools` / `inspect_local_tool` 两个只读 MCP 入口。它们让模型搜索可调用工具时能查询已保存清单，不依赖先读取 Skill，也不要求 Hook 已信任。MCP 不扫描、执行或安装任何软件；若清单过时，仍需正常刷新。
+
+自动触发和 MCP 启动仍要求 Codex 进程能找到 `python3`。终端能运行 Python，不代表所有桌面启动环境都拥有相同 PATH。
 
 ## 已经下载了 ZIP
 

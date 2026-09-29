@@ -22,6 +22,22 @@ def load_registry():
     return module
 
 
+def report_activation(codex):
+    spec = importlib.util.spec_from_file_location("ltr_activation", REPO / "scripts/check_activation.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    result = module.check_activation(codex, str(REPO))
+    messages = {
+        "ready": "Hook 配置可运行；普通新会话是否触发、是否采用工具仍待验收。",
+        "needs_trust": "自动注入未启用：Hook 已加载，但尚未获信任。请在 /hooks 审阅。",
+        "disabled": "自动注入未启用：发现已禁用的 Hook，请在 /hooks 检查。",
+        "not_loaded": "自动注入未就绪：宿主没有加载完整的插件 Hook，请检查安装来源与版本。",
+        "unknown": "无法确认 Hook 状态；自动注入保持待验收，请在 /hooks 检查。",
+    }
+    print(messages.get(result.get("status"), messages["unknown"]))
+    return result
+
+
 def find_codex(explicit=None):
     if explicit:
         path = shutil.which(str(Path(explicit).expanduser()))
@@ -172,13 +188,18 @@ def main(argv=None):
             print("预览完成，没有执行命令或修改清单。")
             return 0
         listing = catalog.list(8)
-        print("\n配置完成，清单中共有 {} 个项目：".format(listing["total"]))
+        print("\n插件文件与清单已配置，清单中共有 {} 个项目：".format(listing["total"]))
         for tool in listing["tools"]:
             print("  {} · {}".format(tool["name"], tool["status"]))
         if not listing["total"]:
             print("还没有发现工具。请检查目录中是否有项目 README 或受支持配置。")
+        if codex:
+            print("\n检查宿主实际 Hook 状态（只读，不更改信任）…", flush=True)
+            report_activation(codex)
         print("\n下一步：新开 Codex 会话，输入 /hooks，审阅并信任 Local Tool Registry 的 Hook。")
-        print("完成后再开新任务，直接描述要做的事即可。")
+        print("自动注入尚待验收：请在日常使用的 Codex 界面新开任务，只给输入和目标，不点名工具。")
+        print("确认该会话收到候选并实际使用工具；手动运行 Hook 或绕过信任的测试不算安装验收。")
+        print("新任务也应能发现 find_local_tools / inspect_local_tool 两个只读 MCP 入口。")
         print("清单目录：" + str(catalog.data_dir))
         print("安装来源：" + str(REPO) + "（请保留）")
         if codex and not shutil.which("codex"):

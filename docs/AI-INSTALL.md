@@ -72,13 +72,17 @@ bash work/local-tool-registry/install.sh --non-interactive --root "/用户已选
 python3 plugins/local-tool-registry/scripts/registry.py list
 ```
 
-## 5. 带用户完成 Hook 信任
+## 5. 带用户完成 Hook 信任与真实任务验收
 
 请使用者新开 Codex 会话，输入 `/hooks`，审阅并信任 Local Tool Registry 的 `SessionStart` 和 `UserPromptSubmit`。然后开始新的任务。
 
 安装插件不等于信任 Hook。不要修改信任记录或使用绕过信任的选项。若当前界面没有该入口，说明如何打开支持它的 Codex CLI；安装器使用完整程序路径时，可用其输出中的路径启动。
 
 此步骤尚未完成时，明确说“插件和清单已配置，还需在 Codex 中信任 Hook”，不要说自动发现已经启用。
+
+完成信任后，还要在使用者日常使用的 Codex 界面新开任务，只提供真实输入和目标，不点名插件或工具。确认该任务的 Hook 审计事件、模型收到的候选、实际工具调用和最终产物；缺少哪一环就报告哪一环尚未验证。只在隔离 CLI 中运行、强制启用 Hook、使用信任绕过参数、手工给模型附候选，都不能代替这一步。
+
+新版还有 `find_local_tools` 与 `inspect_local_tool` 两个只读 MCP 入口。新任务应能在可调用工具中发现它们；若没有，排查安装缓存、MCP 启动和 Python 路径。MCP 可查询旧清单，不代表 Hook 自动刷新已经生效。
 
 最终用简短中文说明：装在哪里、发现了哪些工具、现在还需要用户做哪一步。用户完成后，教其在新任务中直接描述目标，不必每次点名插件或工具。
 

@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "local-tool-registry": {
+      "command": "python3",
+      "args": ["-B", "${CLAUDE_PLUGIN_ROOT}/scripts/mcp_server.py"],
+      "env_vars": ["LTR_DATA_DIR", "XDG_DATA_HOME"]
+    }
+  }
+}

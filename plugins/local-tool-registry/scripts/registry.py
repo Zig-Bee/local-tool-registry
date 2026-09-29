@@ -503,7 +503,13 @@ class Registry:
             if query is not None:
                 if len(cards) > limit:
                     mode = "lexical_candidates"
-                tokens = set(re.findall(r"\w+", query.casefold()))
+                tokens = set(re.findall(r"[a-z0-9_]+", query.casefold()))
+                # Chinese requests often have no spaces. Retain short overlapping
+                # phrases instead of treating an entire sentence as one token.
+                # This is generic input matching, not a platform/name allowlist.
+                for phrase in re.findall(r"[\u3400-\u9fff]+", query):
+                    for size in range(2, min(4, len(phrase)) + 1):
+                        tokens.update(phrase[i:i + size] for i in range(len(phrase) - size + 1))
                 def score(card):
                     haystack = " ".join([card["name"], card["description"]] + card["capabilities"] + card["input_types"] + card["output_types"]).casefold()
                     return sum(min(len(token), 10) for token in tokens if token in haystack)

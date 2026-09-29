@@ -1,0 +1,18 @@
+{
+  "name": "local-tool-registry",
+  "version": "0.1.0+codex.20260929053146",
+  "description": "Discover and reuse local tools across Codex conversations.",
+  "author": {
+    "name": "Local Tool Registry contributors"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Local Tool Registry",
+    "shortDescription": "Find tools already installed on this computer.",
+    "longDescription": "Refresh a shared local tool catalog before tasks, then let Codex select suitable capabilities.",
+    "developerName": "Local Tool Registry contributors",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": "Set up discovery for my local tools."
+  }
+}

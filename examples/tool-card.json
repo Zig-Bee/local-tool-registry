@@ -1,0 +1,13 @@
+{
+  "name": "Example local converter",
+  "path": "/absolute/path/to/installed-project",
+  "description": "Convert the documented input format to plain text.",
+  "capabilities": ["document conversion"],
+  "input_types": ["document"],
+  "output_types": ["text"],
+  "invocation": {
+    "argv": ["/absolute/path/to/environment/bin/converter"],
+    "cwd": "/absolute/path/to/installed-project",
+    "required_env": []
+  }
+}

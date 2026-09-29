@@ -1,0 +1,7 @@
+{
+  "description": "Refresh a user-selected local tool catalog; never execute discovered projects.",
+  "hooks": {
+    "SessionStart": [{"hooks": [{"type": "command", "command": "python3 \"${PLUGIN_ROOT}/hooks/dispatch.py\"", "timeout": 15}]}],
+    "UserPromptSubmit": [{"hooks": [{"type": "command", "command": "python3 \"${PLUGIN_ROOT}/hooks/dispatch.py\"", "timeout": 15, "additionalContextLimit": 4500}]}]
+  }
+}

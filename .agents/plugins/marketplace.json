@@ -1,0 +1,20 @@
+{
+  "name": "local-tool-registry",
+  "interface": {
+    "displayName": "Local Tool Registry"
+  },
+  "plugins": [
+    {
+      "name": "local-tool-registry",
+      "source": {
+        "source": "local",
+        "path": "./plugins/local-tool-registry"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
